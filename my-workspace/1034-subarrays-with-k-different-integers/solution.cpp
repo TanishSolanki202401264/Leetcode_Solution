@@ -1,54 +1,40 @@
+
 class Solution {
 public:
-    int subarraysWithKDistinct(vector<int>& nums, int k) {
-        int total=0;
-        //atleast(k)-atleast(k+1)
+    int Atmost(vector<int> &nums,int k){
+        int ans=0,n=nums.size();
+        int start=0,end=0,count=0;
+        unordered_map<int,int> m;
 
-        unordered_map<int,int>freq;
-        int start=0;
-        int end=0;
-        int n=nums.size();
-        int count=0;
-       //count different integer in this window
-       while(end<n){
-        freq[nums[end]]++;
-        if(freq[nums[end]]==1){
-            count++;
-        }
-        //increase the window size untill different integer count equal to k
-        //Decrease the window size
-        while(count==k){
-            total=total+(n-end);
-            freq[nums[start]]--;
-            if(freq[nums[start]]==0){
-                count--;
-            }
-            start++;
-        }
-        end++;
-       }
-       start=0;
-       end=0;
-       count=0;
-       freq.clear();
-       k++;
+        //now traverse the nums
         while(end<n){
-        freq[nums[end]]++;
-        if(freq[nums[end]]==1){
-            count++;
-        }
-        //increase the window size untill different integer count equal to k
-        //Decrease the window size
-        while(count==k){
-            total=total-(n-end);
-            freq[nums[start]]--;
-            if(freq[nums[start]]==0){
-                count--;
+            m[nums[end]]++;
+            if(m[nums[end]]==1)count++;//new element come
+            
+            //if count is greater than k shrink the window
+            while(count>k && start<=end){
+                m[nums[start]]--;
+                if(m[nums[start]]==0){
+                    count--;
+                }
+                start++;
             }
-            start++;
+            //if count<=k calculate the subarray that is end-start+1
+            ans+=end-start+1;
+            
+            //increase window size
+            end++;
+
         }
-        end++;
-       }
-       return total;
+        return ans;
+    }
+    int subarraysWithKDistinct(vector<int>& nums, int k) {
+        
+        //we use mathematics here if we have to calculate exactly k can we do some math here
+        //exactly k = Atmost(k)-Atmost(k-1);
+        //Atmost(k)=Exactly(k)+Exactly(k-1);
+        
+        return Atmost(nums,k)-Atmost(nums,k-1);
+        
     }
 };
