@@ -1,17 +1,13 @@
 class Solution {
 public:
     int singleNumber(vector<int>& nums) {
-        int n = nums.size();
-        sort(nums.begin(), nums.end());
-
-        for (int i = 0; i < n - 1; i += 2) {
-            if (nums[i] != nums[i + 1]) {
-                return nums[i];
-            }
+    //XOR valo idea
+        int n=nums.size();
+        int XOR=0;
+        for(int i=0;i<n;i++){
+            XOR^=nums[i];
         }
-
-       
-        return nums[n - 1];
+        return XOR;
     }
 };
 
