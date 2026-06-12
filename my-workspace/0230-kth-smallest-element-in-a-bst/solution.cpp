@@ -11,24 +11,17 @@
  */
 class Solution {
 public:
-  void ksmall(TreeNode*root,int &ans,int &k){
-    if(!root){
-        return;
+    void inorder(TreeNode*root,vector<int>&ans){
+        if(root==NULL){
+            return ;
+        }
+        inorder(root->left,ans);
+        ans.push_back(root->val);
+        inorder(root->right,ans);
     }
-    ksmall(root->left,ans,k);
-    k--;
-    if(k==0){
-        ans=root->val;
-    }
-    if(k<=0){
-        return;
-    }
-    ksmall(root->right,ans,k);
-  }
-
     int kthSmallest(TreeNode* root, int k) {
-        int ans=0;
-        ksmall(root,ans,k);
-        return ans;
+        vector<int>ans;
+        inorder(root,ans);
+        return ans[k-1];
     }
 };
