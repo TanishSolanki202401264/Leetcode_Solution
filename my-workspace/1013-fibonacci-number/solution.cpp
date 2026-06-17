@@ -1,12 +1,14 @@
+//tabulation
+//tc = on, sc = on better than memoization
 class Solution {
 public:
     int fib(int n) {
-        if(n==0){
-            return 0;
+        if (n < 2) return n;
+        int n1 = 1, n2 = 0, cn;
+        for(int i = 2; i <= n; i++){
+            cn = n1+n2;
+            n2 = n1, n1 = cn;
         }
-        if(n==1){
-            return 1;
-        }
-        return fib(n-1)+fib(n-2);
+        return cn;
     }
 };
