@@ -1,38 +1,39 @@
 class Solution {
 public:
 
+    long long findHours(vector<int>& piles,int k){
+
+        long long hours = 0;
+
+        for(int pile : piles){
+            hours += (pile + k - 1) / k;
+        }
+
+        return hours;
+    }
+
     int minEatingSpeed(vector<int>& piles, int h) {
-       int start=0;
-       int end=0;
-       int mid,ans;
-       int n=piles.size();
-       long long sum=0;
-       for(int i=0;i<n;i++){
-        sum=sum+piles[i];
-        end=max(end,piles[i]);       
-     }
-     start=sum/h;
-     if(!start){
-        start=1;
-     }
-     while(start<=end){
-        int mid=(start+end)/2;
-        //mid amount of banana consume karva j padse
-        int total =0;
-        for(int i=0;i<n;i++){
-            total=total+piles[i]/mid;
-            if(piles[i]%mid){
-                total++;
+
+        int start = 1;
+        int end = *max_element(piles.begin(), piles.end());
+
+        int ans = end;
+
+        while(start <= end){
+
+            int mid = start + (end - start)/2;
+
+            long long hours = findHours(piles, mid);
+
+            if(hours <= h){
+                ans = mid;
+                end = mid - 1;
+            }
+            else{
+                start = mid + 1;
             }
         }
-        if(total>h){
-          start=mid+1;
-        }
-        else{
-            ans=mid;
-            end=mid-1;
-        }
-     }
-     return ans;
+
+        return ans;
     }
 };
