@@ -1,7 +1,27 @@
 class Solution {
 public:
+    double power(double x, long long n) {
+        // Base case
+        if (n == 0)
+            return 1.0;
+
+        double half = power(x, n / 2);
+
+        if (n % 2 == 0)
+            return half * half;
+        else
+            return x * half * half;
+    }
+
     double myPow(double x, int n) {
-        double answer=pow(x,n);
-        return answer;
+        long long N = n;
+
+        // Negative power
+        if (N < 0) {
+            x = 1 / x;
+            N = -N;
+        }
+
+        return power(x, N);
     }
 };
