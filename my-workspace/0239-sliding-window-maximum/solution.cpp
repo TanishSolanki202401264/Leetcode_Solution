@@ -1,35 +1,17 @@
 class Solution {
 public:
-    vector<int> maxSlidingWindow(vector<int>& nums, int k) {
-         deque<int>d;
-         vector<int>ans;
-         int n=nums.size();
-         //pahela to k-1 elements ne deque ma push kari do
-         for(int i=0;i<k-1;i++){
-            if(d.empty()){
-                d.push_back(i);
-            }
-            else{
-                while(!d.empty()  && nums[i]>nums[d.back()]){
-                    d.pop_back();
-                }
-                d.push_back(i);
-            }
-         }
-         for(int i=k-1;i<n;i++){
-            //Remove smaller element from back
-            while(!d.empty() && nums[i]>nums[d.back()]){
-                d.pop_back();
-            }
-            d.push_back(i);
-            //if front elememnt is outside the window pop front
-            if(d.front()<=i-k){
-                d.pop_front();
-            }
-            ans.push_back(nums[d.front()]);
-            //Find ans
-         }
-         return ans;
+   vector<int> maxSlidingWindow(vector<int>& nums, int k) {
+    priority_queue<pair<int,int>> pq;
+    vector<int> ans;
+    for(int i=0;i<nums.size();i++){
+        pq.push({nums[i],i});
+        while(pq.top().second<=i-k)
+            pq.pop();
+        if(i>=k-1)
+            ans.push_back(pq.top().first);
     }
+    //Bruteforce approach O(N square) ma implement thase jyare aa max heap valii approach O(NlogN) ma implement thai jashe atle j aa tenathii better cghee and optimal approach Deque valii chee O(N) ma j implement karii apee
+    return ans;
+}
 };
 auto it = atexit([ ]( ) { ofstream("display_runtime.txt") << "0";});
