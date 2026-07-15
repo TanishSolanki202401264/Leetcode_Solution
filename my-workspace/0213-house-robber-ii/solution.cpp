@@ -1,48 +1,40 @@
 class Solution {
 public:
-  long long int rob2(vector<long long int>& nums1) {
-        long long int n=nums1.size();
-        //aa curr,prev and prev2 valu logic will be the best because space optimize karine apee chee bahu vadhare padtii
-   if (n == 0) return 0;
-        if (n == 1) return nums1[0];
-      
-       long long  int prev=nums1[0];
-        long long int prev2=0;
-        for(int i=1;i<n;i++){
-           long long  int take=nums1[i];
-            if(i>1){
-                take=take+prev2;
-        }
-        long long int nottake=0+prev;
-
-        long long int curri=max(take,nottake);
-        prev2=prev;
-        prev=curri;
-    }
-    return prev;}
-
-
-
-
-
-
-
-
+  int f(int idx,vector<int>&nums,vector<int>&dp){
+      if(idx==0){
+          return nums[idx];
+      }
+      if(idx<0){
+          return 0;
+      }
+      if(dp[idx]!=-1){
+          return dp[idx];
+      }
+      int pick=nums[idx]+f(idx-2,nums,dp);
+      int notpick=f(idx-1,nums,dp);
+      return dp[idx]=max(pick,notpick);
+  }
    long long  int rob(vector<int>& nums) {
-     long long int n=nums.size();
-    if (n == 0) return 0;
-        if (n == 1) return nums[0];
-
-        vector<long long int>temp1,temp2;
-       
-        for(int i=0;i<n;i++){
-            if(i!=0){
-                temp1.push_back(nums[i]);
-            }
-            if(i!=n-1){
-                temp2.push_back(nums[i]);
-            }
+             int n=nums.size();
+        if(n==1){
+            return nums[0];
         }
-        return max(rob2(temp1),rob2(temp2));
+           vector<int>a;
+       vector<int>b;
+     
+        //first ne consider na karo
+        for(int i=0;i<n-1;i++){
+            a.push_back(nums[i]);
+        }
+        for(int i=1;i<n;i++){
+            b.push_back(nums[i]);
+        }
+       int x=a.size();
+       int y=b.size();
+        vector<int>dp1(x,-1);
+        vector<int>dp2(y,-1);
+       int ans1=f(a.size()-1,a,dp1);
+       int ans2=f(b.size()-1,b,dp2);
+       return max(ans1,ans2);
     }
 };
