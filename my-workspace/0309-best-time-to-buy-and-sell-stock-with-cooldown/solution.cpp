@@ -9,12 +9,10 @@ public:
     return dp[idx][buy];
    }
     if(buy==1){
-        return dp[idx][buy]= max(-prices[idx]+f(idx+1,0,prices,dp),f(idx+1,1,prices,dp));
+        return dp[idx][buy]=max(-prices[idx]+f(idx+1,0,prices,dp),f(idx+1,1,prices,dp));
     }
-    return dp[idx][buy]= max(prices[idx]+f(idx+2,1,prices,dp),f(idx+1,0,prices,dp));
+    return dp[idx][buy]=max(prices[idx]+f(idx+2,1,prices,dp),f(idx+1,0,prices,dp));
   }
-
-
     int maxProfit(vector<int>& prices) {
         int n=prices.size();
         vector<vector<int>>dp(n,vector<int>(2,-1));
