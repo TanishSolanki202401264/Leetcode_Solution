@@ -75,10 +75,8 @@ public:
         sort(words.begin(), words.end(), [](string &a, string &b) {
             return a.size() < b.size();
         });
-
         vector<int> dp(n, 1);
         int maxi = 1;
-
         for (int i = 0; i < n; i++) {
             for (int prev = 0; prev < i; prev++) {
                 if (compare(words[i], words[prev]) && 1 + dp[prev] > dp[i]) {
