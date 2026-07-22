@@ -14,12 +14,6 @@ public:
     }
     return dp[i][j]= maxi;
   }
-
-
-
-
-
-
     int maxCoins(vector<int>& nums) {
         int n=nums.size();
         nums.push_back(1);
